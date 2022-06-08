@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudyDeskV1-WebServices", "StudyDeskV1-WebServices\StudyDeskV1-WebServices.csproj", "{137CE16E-0F4C-4E00-8BC9-45F9AB602096}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{137CE16E-0F4C-4E00-8BC9-45F9AB602096}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{137CE16E-0F4C-4E00-8BC9-45F9AB602096}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{137CE16E-0F4C-4E00-8BC9-45F9AB602096}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{137CE16E-0F4C-4E00-8BC9-45F9AB602096}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6CC99056-724A-4114-9D29-1DD533EF7A51}
+	EndGlobalSection
+EndGlobal
