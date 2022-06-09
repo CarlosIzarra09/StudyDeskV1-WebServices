@@ -119,12 +119,17 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
+    <Content Include="WebServiceDeleteStudent.asmx" />
     <Content Include="WebServiceGetStudents.asmx" />
     <Content Include="WebServicePostStudent.asmx" />
     <Content Include="WebServiceUpdateStudent.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebServiceDeleteStudent.asmx.cs">
+      <DependentUpon>WebServiceDeleteStudent.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebServiceGetStudents.asmx.cs">
       <DependentUpon>WebServiceGetStudents.asmx</DependentUpon>
       <SubType>Component</SubType>

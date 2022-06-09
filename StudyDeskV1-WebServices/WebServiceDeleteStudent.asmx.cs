@@ -11,13 +11,13 @@ namespace StudyDeskV1_WebServices
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    public class WebServicePostStudent : System.Web.Services.WebService
+    public class WebServiceDeleteStudent : System.Web.Services.WebService
     {
         const string quote = "\"";
         string consulta, uid, password, server, database;
         private MySqlConnection connection;
         DataSet dataTable = new DataSet();
-        public WebServicePostStudent()
+        public WebServiceDeleteStudent()
         {
             Initialize();
         }
@@ -34,32 +34,22 @@ namespace StudyDeskV1_WebServices
             connection = new MySqlConnection(connectionString);
         }
         [WebMethod]
-        public string InsertarEstudiante(string name, string lastName, string logo, string email, string password, int tutorId, int careerId)
+        public string EliminarEstudiante(int id)
         {
             connection.Open();
-
             string result;
-
-            MySqlCommand cmd =
-                new MySqlCommand("INSERT INTO students(name, last_name, logo, email, password, is_tutor, career_id) values(@name,@lastname,@logo,@email,@password,@tutorid,@careerid)", connection);
-            //cmd.Parameters.AddWithValue("@id",id);
-            cmd.Parameters.AddWithValue("@name", name);
-            cmd.Parameters.AddWithValue("@lastname", lastName);
-            cmd.Parameters.AddWithValue("@logo", logo);
-            cmd.Parameters.AddWithValue("@email", email);
-            cmd.Parameters.AddWithValue("@password", password);
-            cmd.Parameters.AddWithValue("@tutorid", tutorId);
-            cmd.Parameters.AddWithValue("@careerid", careerId);
+            MySqlCommand cmd = new MySqlCommand("DELETE FROM students WHERE id=@id ", connection);
+            cmd.Parameters.AddWithValue("@id", id);
 
             try
             {
                 cmd.ExecuteNonQuery();
-                result = "An Student was inserted without problems";
+                result = string.Format("An Student with id {0} was deleted without problems", id);
                 return result;
             }
             catch (Exception ex)
             {
-                result = "An error occurred while a Student was being inserted: " + ex.ToString();
+                result = string.Format("An error occurred while a Student with id {0} was being deleted: {1}", id, ex.ToString());
                 return result;
             }
         }
