@@ -120,7 +120,8 @@
   <ItemGroup>
     <Content Include="Web.config" />
     <Content Include="WebServiceGetStudents.asmx" />
-    <Content Include="WebServiceGetTutors.asmx" />
+    <Content Include="WebServicePostStudent.asmx" />
+    <Content Include="WebServiceUpdateStudent.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,8 +129,12 @@
       <DependentUpon>WebServiceGetStudents.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WebServiceGetTutors.asmx.cs">
-      <DependentUpon>WebServiceGetTutors.asmx</DependentUpon>
+    <Compile Include="WebServicePostStudent.asmx.cs">
+      <DependentUpon>WebServicePostStudent.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServiceUpdateStudent.asmx.cs">
+      <DependentUpon>WebServiceUpdateStudent.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
