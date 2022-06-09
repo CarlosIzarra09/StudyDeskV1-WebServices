@@ -70,17 +70,32 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
+    <Content Include="WebServiceDeleteUniversity.asmx" />
     <Content Include="WebServiceGetTutors.asmx" />
     <Content Include="WebServiceGetUniversities.asmx" />
+    <Content Include="WebServicePostUniversity.asmx" />
+    <Content Include="WebServiceUpdateUniversity.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebServiceDeleteUniversity.asmx.cs">
+      <DependentUpon>WebServiceDeleteUniversity.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebServiceGetTutors.asmx.cs">
       <DependentUpon>WebServiceGetTutors.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServiceGetUniversities.asmx.cs">
       <DependentUpon>WebServiceGetUniversities.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServicePostUniversity.asmx.cs">
+      <DependentUpon>WebServicePostUniversity.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServiceUpdateUniversity.asmx.cs">
+      <DependentUpon>WebServiceUpdateUniversity.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
