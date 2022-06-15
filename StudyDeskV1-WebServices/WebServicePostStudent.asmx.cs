@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using BCryptNet = BCrypt.Net;
 
 namespace StudyDeskV1_WebServices
 {
@@ -13,8 +14,7 @@ namespace StudyDeskV1_WebServices
     [System.ComponentModel.ToolboxItem(false)]
     public class WebServicePostStudent : System.Web.Services.WebService
     {
-        const string quote = "\"";
-        string consulta, uid, password, server, database;
+        string uid, password, server, database;
         private MySqlConnection connection;
         DataSet dataTable = new DataSet();
         public WebServicePostStudent()
@@ -34,32 +34,34 @@ namespace StudyDeskV1_WebServices
             connection = new MySqlConnection(connectionString);
         }
         [WebMethod]
-        public string InsertarEstudiante(string name, string lastName, string logo, string email, string password, int tutorId, int careerId)
+        public string InsertarEstudiante(string name, string lastName, string logo, string email, string password, int isTutor, int careerId)
         {
             connection.Open();
 
             string result;
 
             MySqlCommand cmd =
-                new MySqlCommand("INSERT INTO students(name, last_name, logo, email, password, is_tutor, career_id) values(@name,@lastname,@logo,@email,@password,@tutorid,@careerid)", connection);
+                new MySqlCommand("INSERT INTO students(name, last_name, logo, email, password, is_tutor, career_id) values(@name,@lastname,@logo,@email,@password,@isTutor,@careerid)", connection);
             //cmd.Parameters.AddWithValue("@id",id);
             cmd.Parameters.AddWithValue("@name", name);
             cmd.Parameters.AddWithValue("@lastname", lastName);
             cmd.Parameters.AddWithValue("@logo", logo);
             cmd.Parameters.AddWithValue("@email", email);
-            cmd.Parameters.AddWithValue("@password", password);
-            cmd.Parameters.AddWithValue("@tutorid", tutorId);
+            cmd.Parameters.AddWithValue("@password", BCryptNet.BCrypt.HashPassword(password));
+            cmd.Parameters.AddWithValue("@isTutor", isTutor);
             cmd.Parameters.AddWithValue("@careerid", careerId);
 
             try
             {
                 cmd.ExecuteNonQuery();
-                result = "An Student was inserted without problems";
+                result = "A Student was inserted without problems";
+                connection.Close();
                 return result;
             }
             catch (Exception ex)
             {
                 result = "An error occurred while a Student was being inserted: " + ex.ToString();
+                connection.Close();
                 return result;
             }
         }

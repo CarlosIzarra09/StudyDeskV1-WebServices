@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using BCryptNet = BCrypt.Net;
 
 namespace StudyDeskV1_WebServices
 {
@@ -18,8 +19,7 @@ namespace StudyDeskV1_WebServices
     // [System.Web.Script.Services.ScriptService]
     public class WebServicePostTutor : System.Web.Services.WebService
     {
-        const string quote = "\"";
-        string consulta, uid, password, server, database;
+        string uid, password, server, database;
         private MySqlConnection connection;
         
 
@@ -56,18 +56,20 @@ namespace StudyDeskV1_WebServices
             cmd.Parameters.AddWithValue("@description", description);
             cmd.Parameters.AddWithValue("@logo", logo);
             cmd.Parameters.AddWithValue("@email", email);
-            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@password", BCryptNet.BCrypt.HashPassword(password));
             cmd.Parameters.AddWithValue("@priceperhour", priceperhour);
             cmd.Parameters.AddWithValue("@courseid", courseId);
 
             try
             {
                 cmd.ExecuteNonQuery();
-                result = "An Tutor was inserted without problems";
+                result = "An Tutor was inserted without problems"; 
+                connection.Close();
                 return result;
             }
             catch (Exception ex) {
                 result = "An error occurred while a Tutor was being inserted: " + ex.ToString();
+                connection.Close();
                 return result;
             }
            

@@ -16,15 +16,15 @@ namespace StudyDeskV1_WebServices
     [System.ComponentModel.ToolboxItem(false)]
     // Para permitir que se llame a este servicio web desde un script, usando ASP.NET AJAX, quite la marca de comentario de la línea siguiente. 
     // [System.Web.Script.Services.ScriptService]
-    public class WebServiceGetCategory : System.Web.Services.WebService
+    public class WebServiceGetCategories : System.Web.Services.WebService
     {
 
-        const string quote = "\"";
+        
         string consulta, uid, password, server, database;
         private MySqlConnection connection;
         DataSet dataTable = new DataSet();
 
-        public WebServiceGetCategory()
+        public WebServiceGetCategories()
         {
             Initialize();
         }
@@ -52,7 +52,7 @@ namespace StudyDeskV1_WebServices
             MySqlDataAdapter sqlAdapter = new MySqlDataAdapter(consulta, connection);
             sqlAdapter.Fill(dataTable, "DevuelveLista");
 
-
+            connection.Close();
             return dataTable;
         }
     }

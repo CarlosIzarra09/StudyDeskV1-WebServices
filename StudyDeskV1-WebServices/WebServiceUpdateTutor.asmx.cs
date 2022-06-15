@@ -17,8 +17,8 @@ namespace StudyDeskV1_WebServices
     // [System.Web.Script.Services.ScriptService]
     public class WebServiceUpdateTutor : System.Web.Services.WebService
     {
-        const string quote = "\"";
-        string consulta, uid, password, server, database;
+        
+        string uid, password, server, database;
         private MySqlConnection connection;
 
         public WebServiceUpdateTutor()
@@ -64,11 +64,13 @@ namespace StudyDeskV1_WebServices
             {
                 cmd.ExecuteNonQuery();
                 result = string.Format("An Tutor with id {0} was updated without problems",id);
+                connection.Close();
                 return result;
             }
             catch (Exception ex)
             {
                 result = string.Format("An error occurred while a Tutor with id {0} was being inserted: {1}",id,ex.ToString());
+                connection.Close();
                 return result;
             }
 

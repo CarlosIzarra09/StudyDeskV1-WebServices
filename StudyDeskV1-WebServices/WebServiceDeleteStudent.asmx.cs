@@ -13,8 +13,8 @@ namespace StudyDeskV1_WebServices
     [System.ComponentModel.ToolboxItem(false)]
     public class WebServiceDeleteStudent : System.Web.Services.WebService
     {
-        const string quote = "\"";
-        string consulta, uid, password, server, database;
+        
+        string uid, password, server, database;
         private MySqlConnection connection;
         DataSet dataTable = new DataSet();
         public WebServiceDeleteStudent()
@@ -45,11 +45,13 @@ namespace StudyDeskV1_WebServices
             {
                 cmd.ExecuteNonQuery();
                 result = string.Format("An Student with id {0} was deleted without problems", id);
+                connection.Close();
                 return result;
             }
             catch (Exception ex)
             {
                 result = string.Format("An error occurred while a Student with id {0} was being deleted: {1}", id, ex.ToString());
+                connection.Close();
                 return result;
             }
         }

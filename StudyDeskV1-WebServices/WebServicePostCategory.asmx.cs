@@ -19,8 +19,8 @@ namespace StudyDeskV1_WebServices
     public class WebServicePostCategory : System.Web.Services.WebService
     {
 
-        const string quote = "\"";
-        string consulta, uid, password, server, database;
+        
+        string uid, password, server, database;
         private MySqlConnection connection;
         DataSet dataTable = new DataSet();
 
@@ -57,11 +57,13 @@ namespace StudyDeskV1_WebServices
             {
                 cmd.ExecuteNonQuery();
                 result = "A category was inserted without problems";
+                connection.Close();
                 return result;
             }
             catch (Exception ex)
             {
                 result = "An error occurred while a category was being inserted: " + ex.ToString();
+                connection.Close();
                 return result;
             }
         }
