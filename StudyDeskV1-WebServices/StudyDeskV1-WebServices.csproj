@@ -112,28 +112,19 @@
   <ItemGroup>
     <Content Include="Web.config" />
     <Content Include="WebServiceDeleteUniversity.asmx" />
-    <Content Include="WebServiceGetTutors.asmx" />
     <Content Include="WebServiceGetUniversities.asmx" />
     <Content Include="WebServicePostUniversity.asmx" />
     <Content Include="WebServiceUpdateUniversity.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebServiceDeleteUniversity.asmx.cs">
-      <DependentUpon>WebServiceDeleteUniversity.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WebServiceGetTutors.asmx.cs" />
     <Content Include="WebServiceDeleteTutor.asmx" />
+    <Content Include="WebServiceGetTutors.asmx" />
     <Content Include="WebServicePostTutor.asmx" />
     <Content Include="WebServiceUpdateTutor.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebServiceDeleteTutor.asmx.cs">
-      <DependentUpon>WebServiceDeleteTutor.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Content Include="WebServiceDeleteStudent.asmx" />
     <Content Include="WebServiceGetStudents.asmx" />
     <Content Include="WebServicePostStudent.asmx" />
@@ -141,10 +132,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebServiceDeleteStudent.asmx.cs">
-      <DependentUpon>WebServiceDeleteStudent.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
+    <Content Include="WebServiceDeleteCategory.asmx" />
+    <Content Include="WebServiceGetCategories.asmx" />
+    <Content Include="WebServicePostCategory.asmx" />
+    <Content Include="WebServicePutCategory.asmx" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebServiceGetStudents.asmx.cs">
       <DependentUpon>WebServiceGetStudents.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -155,6 +149,10 @@
     </Compile>
     <Compile Include="WebServiceUpdateStudent.asmx.cs">
       <DependentUpon>WebServiceUpdateStudent.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServiceDeleteStudent.asmx.cs">
+      <DependentUpon>WebServiceDeleteStudent.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServiceGetUniversities.asmx.cs">
@@ -169,12 +167,40 @@
       <DependentUpon>WebServiceUpdateUniversity.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="WebServiceDeleteUniversity.asmx.cs">
+      <DependentUpon>WebServiceDeleteUniversity.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServiceGetTutors.asmx.cs">
+      <DependentUpon>WebServiceGetTutors.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebServicePostTutor.asmx.cs">
       <DependentUpon>WebServicePostTutor.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServiceUpdateTutor.asmx.cs">
       <DependentUpon>WebServiceUpdateTutor.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServiceDeleteTutor.asmx.cs">
+      <DependentUpon>WebServiceDeleteTutor.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServiceGetCategories.asmx.cs">
+      <DependentUpon>WebServiceGetCategories.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServicePostCategory.asmx.cs">
+      <DependentUpon>WebServicePostCategory.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServicePutCategory.asmx.cs">
+      <DependentUpon>WebServicePutCategory.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServiceDeleteCategory.asmx.cs">
+      <DependentUpon>WebServiceDeleteCategory.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
