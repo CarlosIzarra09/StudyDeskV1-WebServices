@@ -16,10 +16,8 @@ namespace StudyDeskV1_WebServices
     // Para permitir que se llame a este servicio web desde un script, usando ASP.NET AJAX, quite la marca de comentario de la línea siguiente. 
     // [System.Web.Script.Services.ScriptService]
     public class WebServiceDeleteTutor : System.Web.Services.WebService
-    {
-
-        const string quote = "\"";
-        string consulta, uid, password, server, database;
+    { 
+        string uid, password, server, database;
         private MySqlConnection connection;
 
 
@@ -53,11 +51,13 @@ namespace StudyDeskV1_WebServices
             {
                 cmd.ExecuteNonQuery();
                 result = string.Format("An Tutor with id {0} was deleted without problems", id);
+                connection.Close();
                 return result;
             }
             catch (Exception ex)
             {
                 result = string.Format("An error occurred while a Tutor with id {0} was being deleted: {1}",id,ex.ToString());
+                connection.Close();
                 return result;
             }
         }

@@ -16,15 +16,15 @@ namespace StudyDeskV1_WebServices
     [System.ComponentModel.ToolboxItem(false)]
     // Para permitir que se llame a este servicio web desde un script, usando ASP.NET AJAX, quite la marca de comentario de la línea siguiente. 
     // [System.Web.Script.Services.ScriptService]
-    public class WebServicePutCategory : System.Web.Services.WebService
+    public class WebServiceUpdateCategory : System.Web.Services.WebService
     {
 
-        const string quote = "\"";
-        string consulta, uid, password, server, database;
+        
+        string uid, password, server, database;
         private MySqlConnection connection;
         DataSet dataTable = new DataSet();
 
-        public WebServicePutCategory()
+        public WebServiceUpdateCategory()
         {
             Initialize();
         }
@@ -58,11 +58,13 @@ namespace StudyDeskV1_WebServices
             {
                 cmd.ExecuteNonQuery();
                 result = string.Format("A category with id {0} was updated without problems", id);
+                connection.Close();
                 return result;
             }
             catch (Exception ex)
             {
                 result = string.Format("An error occurred while a category with id {0} was being inserted: {1}", id, ex.ToString());
+                connection.Close();
                 return result;
             }
         }

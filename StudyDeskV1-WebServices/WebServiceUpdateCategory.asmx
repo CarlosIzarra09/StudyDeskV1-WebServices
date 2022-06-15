@@ -1,0 +1,1 @@
+<%@ WebService Language="C#" CodeBehind="WebServiceUpdateCategory.asmx.cs" Class="StudyDeskV1_WebServices.WebServiceUpdateCategory" %>

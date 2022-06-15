@@ -18,8 +18,8 @@ namespace StudyDeskV1_WebServices
     public class WebServicePostUniversity : System.Web.Services.WebService
     {
 
-        const string quote = "\"";
-        string consulta, uid, password, server, database;
+        
+        string uid, password, server, database;
         private MySqlConnection connection;
 
 
@@ -57,11 +57,13 @@ namespace StudyDeskV1_WebServices
             {
                 cmd.ExecuteNonQuery();
                 result = "An University was inserted without problems";
+                connection.Close();
                 return result;
             }
             catch (Exception ex)
             {
                 result = "An error occurred while a University was being inserted: " + ex.ToString();
+                connection.Close();
                 return result;
             }
 

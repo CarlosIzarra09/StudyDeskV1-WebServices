@@ -43,6 +43,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BCrypt.Net-Next, Version=4.0.3.0, Culture=neutral, PublicKeyToken=1e11be04b6288443, processorArchitecture=MSIL">
+      <HintPath>..\packages\BCrypt.Net-Next.4.0.3\lib\net472\BCrypt.Net-Next.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.5\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -111,34 +114,31 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Web.config" />
+    <Content Include="WebServiceAuthentication.asmx" />
     <Content Include="WebServiceDeleteUniversity.asmx" />
     <Content Include="WebServiceGetUniversities.asmx" />
     <Content Include="WebServicePostUniversity.asmx" />
     <Content Include="WebServiceUpdateUniversity.asmx" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Content Include="WebServiceDeleteTutor.asmx" />
-    <Content Include="WebServiceGetTutors.asmx" />
-    <Content Include="WebServicePostTutor.asmx" />
-    <Content Include="WebServiceUpdateTutor.asmx" />
-  </ItemGroup>
+ 
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="WebServiceDeleteStudent.asmx" />
     <Content Include="WebServiceGetStudents.asmx" />
     <Content Include="WebServicePostStudent.asmx" />
     <Content Include="WebServiceUpdateStudent.asmx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="WebServiceDeleteCategory.asmx" />
     <Content Include="WebServiceGetCategories.asmx" />
     <Content Include="WebServicePostCategory.asmx" />
-    <Content Include="WebServicePutCategory.asmx" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="WebServiceUpdateCategory.asmx" />
+    <Content Include="WebServiceDeleteTutor.asmx" />
+    <Content Include="WebServiceGetTutors.asmx" />
+    <Content Include="WebServicePostTutor.asmx" />
+    <Content Include="WebServiceUpdateTutor.asmx" />
+
+    <Compile Include="WebServiceAuthentication.asmx.cs">
+      <DependentUpon>WebServiceAuthentication.asmx</DependentUpon>
+    </Compile>
     <Compile Include="WebServiceGetStudents.asmx.cs">
       <DependentUpon>WebServiceGetStudents.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -195,8 +195,8 @@
       <DependentUpon>WebServicePostCategory.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WebServicePutCategory.asmx.cs">
-      <DependentUpon>WebServicePutCategory.asmx</DependentUpon>
+    <Compile Include="WebServiceUpdateCategory.asmx.cs">
+      <DependentUpon>WebServiceUpdateCategory.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServiceDeleteCategory.asmx.cs">

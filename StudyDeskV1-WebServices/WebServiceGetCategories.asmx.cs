@@ -19,7 +19,7 @@ namespace StudyDeskV1_WebServices
     public class WebServiceGetCategories : System.Web.Services.WebService
     {
 
-        const string quote = "\"";
+        
         string consulta, uid, password, server, database;
         private MySqlConnection connection;
         DataSet dataTable = new DataSet();
@@ -52,7 +52,7 @@ namespace StudyDeskV1_WebServices
             MySqlDataAdapter sqlAdapter = new MySqlDataAdapter(consulta, connection);
             sqlAdapter.Fill(dataTable, "DevuelveLista");
 
-
+            connection.Close();
             return dataTable;
         }
     }
