@@ -171,6 +171,14 @@
       <DependentUpon>WebServiceDeleteUniversity.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="WebServiceDeleteCourses.asmx.cs">
+      <DependentUpon>WebServiceDeleteCourses.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServiceGetCourses.asmx.cs">
+      <DependentUpon>WebServiceGetCourses.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebServiceGetTutors.asmx.cs">
       <DependentUpon>WebServiceGetTutors.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -201,6 +209,14 @@
     </Compile>
     <Compile Include="WebServiceDeleteCategory.asmx.cs">
       <DependentUpon>WebServiceDeleteCategory.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServicePostCourse.asmx.cs">
+      <DependentUpon>WebServicePostCourse.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServiceUpdateCourse.asmx.cs">
+      <DependentUpon>WebServiceUpdateCourse.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
