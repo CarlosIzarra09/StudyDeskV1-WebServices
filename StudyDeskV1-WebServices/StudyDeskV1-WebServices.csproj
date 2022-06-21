@@ -59,8 +59,12 @@
       <HintPath>..\packages\K4os.Hash.xxHash.1.0.6\lib\net46\K4os.Hash.xxHash.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="MySql.Data, Version=8.0.28.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
-    <Reference Include="MySql.Web, Version=8.0.28.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
+    <Reference Include="MySql.Data, Version=6.10.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.6.10.9\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Web, Version=8.0.27.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\Connector NET 8.0\Assemblies\v4.5.2\MySql.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
@@ -69,6 +73,7 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.5.0.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Management" />
     <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
@@ -100,12 +105,6 @@
       <HintPath>..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.Web.Services.dll</HintPath>
     </Reference>
     <Reference Include="System.EnterpriseServices" />
-    <Reference Include="Ubiety.Dns.Core, Version=2.2.1.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.8.0.29\lib\net452\Ubiety.Dns.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="ZstdNet, Version=1.4.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <HintPath>..\packages\MySql.Data.8.0.29\lib\net452\ZstdNet.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
@@ -117,8 +116,10 @@
     <Content Include="Web.config" />
     <Content Include="WebServiceAuthentication.asmx" />
     <Content Include="WebServiceDeleteUniversity.asmx" />
+    <Content Include="WebServiceGetPlatforms.asmx" />
     <Content Include="WebServiceGetTutorById.asmx" />
     <Content Include="WebServiceGetUniversities.asmx" />
+    <Content Include="WebServicePostPlatform.asmx" />
     <Content Include="WebServicePostUniversity.asmx" />
     <Content Include="WebServiceUpdateUniversity.asmx" />
   </ItemGroup>
@@ -150,12 +151,20 @@
     <Compile Include="WebServiceAuthentication.asmx.cs">
       <DependentUpon>WebServiceAuthentication.asmx</DependentUpon>
     </Compile>
+    <Compile Include="WebServiceGetPlatforms.asmx.cs">
+      <DependentUpon>WebServiceGetPlatforms.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebServiceGetStudents.asmx.cs">
       <DependentUpon>WebServiceGetStudents.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServiceGetTutorById.asmx.cs">
       <DependentUpon>WebServiceGetTutorById.asmx</DependentUpon>
+    </Compile>
+    <Compile Include="WebServicePostPlatform.asmx.cs">
+      <DependentUpon>WebServicePostPlatform.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServicePostStudent.asmx.cs">
       <DependentUpon>WebServicePostStudent.asmx</DependentUpon>
@@ -243,7 +252,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
