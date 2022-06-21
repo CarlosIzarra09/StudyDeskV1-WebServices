@@ -1,4 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
+using StudyDeskV1_WebServices.Communications;
+using StudyDeskV1_WebServices.Resources;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,7 +11,7 @@ using BCryptNet = BCrypt.Net;
 
 namespace StudyDeskV1_WebServices
 {
-    public class ResponseService
+    /*public class ResponseService
     {
         public ResponseService() { }
         public ResponseService(string message, string status)
@@ -20,6 +22,21 @@ namespace StudyDeskV1_WebServices
 
         public string Status { get; set; }
         public string Message { get; set; }
+    }*/
+
+    public class AuthenticationResponse : BaseResponse<Authentication>
+    {
+        public AuthenticationResponse()
+        {
+        }
+
+        public AuthenticationResponse(string message) : base(message)
+        {
+        }
+
+        public AuthenticationResponse(Authentication resource, string message) : base(resource, message)
+        {
+        }
     }
 
     /// <summary>
@@ -57,7 +74,7 @@ namespace StudyDeskV1_WebServices
         }
 
         [WebMethod]
-        public ResponseService AutenticarUsuarioTutor(string email, string password)
+        public AuthenticationResponse AutenticarUsuarioTutor(string email, string password)
         {
             connection.Open();
 
@@ -70,32 +87,36 @@ namespace StudyDeskV1_WebServices
             if (dataTable.Tables["RetornaTutor"].Rows.Count > 0)
             {
 
-                object data = dataTable.Tables["RetornaTutor"].Rows[0]["password"];
-                string requestPassword = Convert.ToString(data);
+                string requestPassword = Convert.ToString(dataTable.Tables["RetornaTutor"].Rows[0]["password"]);
 
                 if (!BCryptNet.BCrypt.Verify(password, requestPassword))
                 {
                     connection.Close();
-                    return new ResponseService("Invalid password for this user", "error");
+                    //return new ResponseService("Invalid password for this user", "Error");
+                    return new AuthenticationResponse("Invalid password for this user");
                 }
 
                 else
                 {
                     connection.Close();
-                    return new ResponseService("Successful tutor authentication, welcome", "success");
+                    //return new ResponseService("Successful tutor authentication, welcome", "Success");
+                    Authentication auth = new Authentication();
+                    auth.Id = Convert.ToInt32(dataTable.Tables["RetornaTutor"].Rows[0]["id"]);
+                    return new AuthenticationResponse(auth, "Successful tutor authentication, welcome");
                 }
 
             }
             else
             {
                 connection.Close();
-                return new ResponseService("This email does not correspond to any user", "error");
+                //return new ResponseService("This email does not correspond to any user", "Error");
+                return new AuthenticationResponse("This email does not correspond to any user");
             }
 
         }
 
         [WebMethod]
-        public ResponseService AutenticarUsuarioEstudiante(string email, string password)
+        public AuthenticationResponse AutenticarUsuarioEstudiante(string email, string password)
         {
             connection.Open();
 
@@ -114,20 +135,24 @@ namespace StudyDeskV1_WebServices
                 if (!BCryptNet.BCrypt.Verify(password, requestPassword))
                 {
                     connection.Close();
-                    return new ResponseService("Invalid password for this user", "error");
+                    //return new ResponseService("Invalid password for this user", "Error");
+                    return new AuthenticationResponse("Invalid password for this user");
                 }
 
                 else
                 {
                     connection.Close();
-                    return new ResponseService("Successful student authentication, welcome", "success");
+                    //return new ResponseService("Successful student authentication, welcome", "Success");
+                    Authentication auth = new Authentication();
+                    auth.Id = Convert.ToInt32(dataTable.Tables["RetornaEstudiante"].Rows[0]["id"]);
+                    return new AuthenticationResponse(auth,"Successful student authentication, welcome");
                 }
 
             }
             else
             {
                 connection.Close();
-                return new ResponseService("This email does not correspond to any user", "error");
+                return new AuthenticationResponse("This email does not correspond to any user");
             }
 
         }

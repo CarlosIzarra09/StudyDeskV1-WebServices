@@ -62,7 +62,7 @@ namespace StudyDeskV1_WebServices
             }
             catch (Exception ex)
             {
-                result = string.Format("An error occurred while a courses with id {0} was being inserted: {1}", id, ex.ToString());
+                result = string.Format("An error occurred while a course with id {0} was being updated: {1}", id, ex.ToString());
                 connection.Close();
                 return result;
             }

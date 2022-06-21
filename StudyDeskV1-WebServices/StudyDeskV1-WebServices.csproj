@@ -116,12 +116,15 @@
     <Content Include="Web.config" />
     <Content Include="WebServiceAuthentication.asmx" />
     <Content Include="WebServiceDeleteUniversity.asmx" />
+    <Content Include="WebServiceGetTutorById.asmx" />
     <Content Include="WebServiceGetUniversities.asmx" />
     <Content Include="WebServicePostUniversity.asmx" />
     <Content Include="WebServiceUpdateUniversity.asmx" />
   </ItemGroup>
- 
   <ItemGroup>
+    <Compile Include="Communications\BaseResponse.cs" />
+    <Compile Include="Resources\Authentication.cs" />
+    <Compile Include="Resources\Tutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="WebServiceDeleteStudent.asmx" />
     <Content Include="WebServiceGetStudents.asmx" />
@@ -135,13 +138,19 @@
     <Content Include="WebServiceGetTutors.asmx" />
     <Content Include="WebServicePostTutor.asmx" />
     <Content Include="WebServiceUpdateTutor.asmx" />
-
+    <Content Include="WebServiceDeleteCourses.asmx" />
+    <Content Include="WebServiceGetCourses.asmx" />
+    <Content Include="WebServicePostCourse.asmx" />
+    <Content Include="WebServiceUpdateCourse.asmx" />
     <Compile Include="WebServiceAuthentication.asmx.cs">
       <DependentUpon>WebServiceAuthentication.asmx</DependentUpon>
     </Compile>
     <Compile Include="WebServiceGetStudents.asmx.cs">
       <DependentUpon>WebServiceGetStudents.asmx</DependentUpon>
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServiceGetTutorById.asmx.cs">
+      <DependentUpon>WebServiceGetTutorById.asmx</DependentUpon>
     </Compile>
     <Compile Include="WebServicePostStudent.asmx.cs">
       <DependentUpon>WebServicePostStudent.asmx</DependentUpon>
@@ -229,6 +238,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

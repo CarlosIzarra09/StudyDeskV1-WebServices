@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using BCryptNet = BCrypt.Net;
 
 namespace StudyDeskV1_WebServices
 {
@@ -56,7 +57,7 @@ namespace StudyDeskV1_WebServices
             cmd.Parameters.AddWithValue("@description", description);
             cmd.Parameters.AddWithValue("@logo", logo);
             cmd.Parameters.AddWithValue("@email", email);
-            cmd.Parameters.AddWithValue("@password", password);
+            cmd.Parameters.AddWithValue("@password", BCryptNet.BCrypt.HashPassword(password));
             cmd.Parameters.AddWithValue("@priceperhour", priceperhour);
             cmd.Parameters.AddWithValue("@courseid", courseId);
 
