@@ -1,7 +1,8 @@
-﻿using MySql.Data.MySqlClient;
+﻿//using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -18,10 +19,10 @@ namespace StudyDeskV1_WebServices
     // [System.Web.Script.Services.ScriptService]
     public class WebServiceGetCourses : System.Web.Services.WebService
     {
-        const string quote = "\"";
+        //const string quote = "\"";
         string consulta, uid, password, server, database;
-        private MySqlConnection connection;
-        DataSet dataTable = new DataSet();
+        private SqlConnection connection;
+        readonly DataSet dataTable = new DataSet();
 
         public WebServiceGetCourses()
         {
@@ -29,15 +30,15 @@ namespace StudyDeskV1_WebServices
         }
         private void Initialize()
         {
-            server = "bce1wdw4uipazot89sge-mysql.services.clever-cloud.com";
-            database = "bce1wdw4uipazot89sge";
-            uid = "uq0dnd7aah5zgpja";
-            password = "POOf7hGH9xOVGw4DNLT7";
+            server = "sql202201.database.windows.net";
+            database = "studydeskDb";
+            uid = "STUDYDESK";
+            password = "8CL7cR$Ce$gCxNmB";
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
 
-            connection = new MySqlConnection(connectionString);
+            connection = new SqlConnection(connectionString);
         }
 
 
@@ -47,12 +48,12 @@ namespace StudyDeskV1_WebServices
             connection.Open();
 
 
-            consulta = "SELECT * FROM bce1wdw4uipazot89sge.courses;";
+            consulta = "SELECT * FROM dbo.courses;";
 
-            MySqlDataAdapter sqlAdapter = new MySqlDataAdapter(consulta, connection);
+            SqlDataAdapter sqlAdapter = new SqlDataAdapter(consulta, connection);
             sqlAdapter.Fill(dataTable, "DevuelveLista");
 
-
+            connection.Close();
             return dataTable;
         }
     }

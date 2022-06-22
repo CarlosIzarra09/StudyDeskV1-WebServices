@@ -1,9 +1,10 @@
-﻿using MySql.Data.MySqlClient;
+﻿//using MySql.Data.MySqlClient;
 using StudyDeskV1_WebServices.Communications;
 using StudyDeskV1_WebServices.Resources;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -40,8 +41,8 @@ namespace StudyDeskV1_WebServices
     public class WebServiceGetStudentById : System.Web.Services.WebService
     {
         string consulta, uid, password, server, database;
-        private MySqlConnection connection;
-        DataSet dataTable = new DataSet();
+        private SqlConnection connection;
+        readonly DataSet dataTable = new DataSet();
 
         public WebServiceGetStudentById()
         {
@@ -50,15 +51,15 @@ namespace StudyDeskV1_WebServices
 
         private void Initialize()
         {
-            server = "bce1wdw4uipazot89sge-mysql.services.clever-cloud.com";
-            database = "bce1wdw4uipazot89sge";
-            uid = "uq0dnd7aah5zgpja";
-            password = "POOf7hGH9xOVGw4DNLT7";
+            server = "sql202201.database.windows.net";
+            database = "studydeskDb";
+            uid = "STUDYDESK";
+            password = "8CL7cR$Ce$gCxNmB";
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
 
-            connection = new MySqlConnection(connectionString);
+            connection = new SqlConnection(connectionString);
         }
 
         [WebMethod]
@@ -68,8 +69,8 @@ namespace StudyDeskV1_WebServices
             Student student = new Student();
             StudentResponse studentResponse;
 
-            consulta = String.Format("SELECT * FROM students WHERE id='{0}'", id);
-            MySqlDataAdapter sqlAdapter = new MySqlDataAdapter(consulta, connection);
+            consulta = String.Format("SELECT * FROM dbo.students WHERE id='{0}'", id);
+            SqlDataAdapter sqlAdapter = new SqlDataAdapter(consulta, connection);
             sqlAdapter.Fill(dataTable, "RetornaEstudiante");
 
             if (dataTable.Tables["RetornaEstudiante"].Rows.Count > 0)

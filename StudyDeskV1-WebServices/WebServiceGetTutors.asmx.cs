@@ -1,10 +1,13 @@
-﻿using MySql.Data.MySqlClient;
+﻿//using MySql.Data.MySqlClient;
+using StudyDeskV1_WebServices.Helper;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using System.Web.Services.Protocols;
 
 namespace StudyDeskV1_WebServices
 {
@@ -21,8 +24,9 @@ namespace StudyDeskV1_WebServices
 
         
         string consulta, uid, password, server, database;
-        private MySqlConnection connection;
-        DataSet dataTable = new DataSet();
+        private SqlConnection connection;
+        readonly DataSet dataTable = new DataSet();
+        public UserDetails user;
 
         public WebServiceGetTutors()
         {
@@ -30,30 +34,43 @@ namespace StudyDeskV1_WebServices
         }
         private void Initialize()
         {
-            server = "bce1wdw4uipazot89sge-mysql.services.clever-cloud.com";
-            database = "bce1wdw4uipazot89sge";
-            uid = "uq0dnd7aah5zgpja";
-            password = "POOf7hGH9xOVGw4DNLT7";
+            server = "sql202201.database.windows.net";
+            database = "studydeskDb";
+            uid = "STUDYDESK";
+            password = "8CL7cR$Ce$gCxNmB";
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
 
-            connection = new MySqlConnection(connectionString);
+            connection = new SqlConnection(connectionString);
         }
 
+        
         [WebMethod]
+        [SoapHeader("user")]
         public DataSet ListaTutores()
         {
-            connection.Open();
+            
+            if (user != null)
+            {
+                if (user.IsValid())
+                {
+                    connection.Open();
+                    consulta = "SELECT * FROM dbo.tutors;";
 
+                    SqlDataAdapter sqlAdapter = new SqlDataAdapter(consulta, connection);
+                    sqlAdapter.Fill(dataTable, "DevuelveLista");
 
-            consulta = "SELECT * FROM tutors;";
+                    connection.Close();
+                    return dataTable;
+                }
+                else
+                    return dataTable;
+            }
+            else {
+                return dataTable;
+            }
 
-            MySqlDataAdapter sqlAdapter = new MySqlDataAdapter(consulta, connection);
-            sqlAdapter.Fill(dataTable, "DevuelveLista");
-
-            connection.Close();
-            return dataTable;
         }
     }
 }

@@ -1,6 +1,7 @@
-﻿using MySql.Data.MySqlClient;
+﻿//using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -20,7 +21,7 @@ namespace StudyDeskV1_WebServices
     {
         
         string uid, password, server, database;
-        private MySqlConnection connection;
+        private SqlConnection connection;
 
         public WebServiceUpdateTutor()
         {
@@ -29,15 +30,15 @@ namespace StudyDeskV1_WebServices
 
         private void Initialize()
         {
-            server = "bce1wdw4uipazot89sge-mysql.services.clever-cloud.com";
-            database = "bce1wdw4uipazot89sge";
-            uid = "uq0dnd7aah5zgpja";
-            password = "POOf7hGH9xOVGw4DNLT7";
+            server = "sql202201.database.windows.net";
+            database = "studydeskDb";
+            uid = "STUDYDESK";
+            password = "8CL7cR$Ce$gCxNmB";
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
 
-            connection = new MySqlConnection(connectionString);
+            connection = new SqlConnection(connectionString);
         }
 
         [WebMethod]
@@ -48,8 +49,8 @@ namespace StudyDeskV1_WebServices
             string result;
 
 
-            MySqlCommand cmd =
-                new MySqlCommand("UPDATE tutors SET name=@name, last_name=@lastname, description=@description,logo=@logo,email=@email,password=@password,price_per_hour=@priceperhour,course_id=@courseid " +
+            SqlCommand cmd =
+                new SqlCommand("UPDATE dbo.tutors SET name=@name, last_name=@lastname, description=@description,logo=@logo,email=@email,password=@password,price_per_hour=@priceperhour,course_id=@courseid " +
                 "WHERE id=@id", connection);
             cmd.Parameters.AddWithValue("@id",id);
             cmd.Parameters.AddWithValue("@name", name);

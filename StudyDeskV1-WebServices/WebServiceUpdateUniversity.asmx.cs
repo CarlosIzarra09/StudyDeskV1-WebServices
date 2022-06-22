@@ -1,6 +1,7 @@
-﻿using MySql.Data.MySqlClient;
+﻿//using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -20,7 +21,7 @@ namespace StudyDeskV1_WebServices
 
         
         string uid, password, server, database;
-        private MySqlConnection connection;
+        private SqlConnection connection;
 
         public WebServiceUpdateUniversity()
         {
@@ -29,15 +30,15 @@ namespace StudyDeskV1_WebServices
 
         private void Initialize()
         {
-            server = "bce1wdw4uipazot89sge-mysql.services.clever-cloud.com";
-            database = "bce1wdw4uipazot89sge";
-            uid = "uq0dnd7aah5zgpja";
-            password = "POOf7hGH9xOVGw4DNLT7";
+            server = "sql202201.database.windows.net";
+            database = "studydeskDb";
+            uid = "STUDYDESK";
+            password = "8CL7cR$Ce$gCxNmB";
             string connectionString;
             connectionString = "SERVER=" + server + ";" + "DATABASE=" +
             database + ";" + "UID=" + uid + ";" + "PASSWORD=" + password + ";";
 
-            connection = new MySqlConnection(connectionString);
+            connection = new SqlConnection(connectionString);
         }
 
         [WebMethod]
@@ -48,8 +49,8 @@ namespace StudyDeskV1_WebServices
             string result;
 
 
-            MySqlCommand cmd =
-                new MySqlCommand("UPDATE universities SET name=@name " +
+            SqlCommand cmd =
+                new SqlCommand("UPDATE dbo.universities SET name=@name " +
                 "WHERE id=@id", connection);
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Parameters.AddWithValue("@name", name);
@@ -57,13 +58,13 @@ namespace StudyDeskV1_WebServices
             try
             {
                 cmd.ExecuteNonQuery();
-                result = string.Format("An Universidad with id {0} was updated without problems", id);
+                result = string.Format("An University with id {0} was updated without problems", id);
                 connection.Close();
                 return result;
             }
             catch (Exception ex)
             {
-                result = string.Format("An error occurred while a Universidad with id {0} was being inserted: {1}", id, ex.ToString());
+                result = string.Format("An error occurred while a University with id {0} was being inserted: {1}", id, ex.ToString());
                 connection.Close();
                 return result;
             }
