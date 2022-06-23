@@ -41,21 +41,31 @@ namespace StudyDeskV1_WebServices
 
         
         [WebMethod]
+        [SoapHeader("credentials")]
         public DataSet ListaCarreras()
         {
-            
-            
+
+            if (credentials != null)
+            {
+                if (credentials.IsValid())
+                {
                     connection.Open();
-
-
-                    consulta = "SELECT * FROM dbo.careers;";
+                    consulta = "SELECT* FROM dbo.careers;";
 
                     SqlDataAdapter sqlAdapter = new SqlDataAdapter(consulta, connection);
                     sqlAdapter.Fill(dataTable, "Careers");
 
                     connection.Close();
                     return dataTable;
-              
+                }
+                else
+                    return dataTable;
+            }
+            else
+            {
+                return dataTable;
+            }
+
         }
     }
 }
