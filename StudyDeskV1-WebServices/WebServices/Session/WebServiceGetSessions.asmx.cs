@@ -13,15 +13,16 @@ namespace StudyDeskV1_WebServices
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    public class WebServiceGetTutors : System.Web.Services.WebService
+    public class WebServiceGetSessions : System.Web.Services.WebService
     {
-        const string quote = "\"";
+
+
         string consulta, uid, password, server, database;
         private SqlConnection connection;
         readonly DataSet dataTable = new DataSet();
         public AuthHeader credentials;
 
-        public WebServiceGetTutors()
+        public WebServiceGetSessions()
         {
             Initialize();
         }
@@ -40,21 +41,20 @@ namespace StudyDeskV1_WebServices
 
 
         [WebMethod]
-        [SoapHeader("credentials")]
-        public DataSet ListaTutores()
+        public DataSet ListaSecciones()
         {
-
+            
             if (credentials != null)
             {
                 if (credentials.IsValid())
                 {
                     connection.Open();
-                    consulta = "SELECT * FROM dbo.tutors;";
+
+                    consulta = "SELECT * FROM dbo.sessions;";
 
                     SqlDataAdapter sqlAdapter = new SqlDataAdapter(consulta, connection);
                     sqlAdapter.Fill(dataTable, "Tutors");
 
-                    connection.Close();
                     return dataTable;
                 }
                 else
@@ -64,7 +64,6 @@ namespace StudyDeskV1_WebServices
             {
                 return dataTable;
             }
-
         }
     }
 }

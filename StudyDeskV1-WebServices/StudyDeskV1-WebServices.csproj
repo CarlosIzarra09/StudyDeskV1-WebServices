@@ -108,6 +108,10 @@
   <ItemGroup>
     <Content Include="WebServices\Student\WebServiceGetStudentById.asmx" />
     <Content Include="Web.config" />
+    <Content Include="WebServices\Session\WebServiceDeleteSession.asmx" />
+    <Content Include="WebServices\Session\WebServiceGetSessions.asmx" />
+    <Content Include="WebServices\Session\WebServicePostSession.asmx" />
+    <Content Include="WebServices\Session\WebServiceUpdateSession.asmx" />
     <Content Include="WebServiceAuthentication.asmx" />
     <Content Include="WebServices\University\WebServiceDeleteUniversity.asmx" />
     <Content Include="WebServices\Platform\WebServiceGetPlatforms.asmx" />
@@ -263,6 +267,22 @@
     </Compile>
     <Compile Include="WebServices\Course\WebServiceUpdateCourse.asmx.cs">
       <DependentUpon>WebServiceUpdateCourse.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Session\WebServiceDeleteSession.asmx.cs">
+      <DependentUpon>WebServiceDeleteSession.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Session\WebServiceGetSessions.asmx.cs">
+      <DependentUpon>WebServiceGetSessions.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Session\WebServicePostSession.asmx.cs">
+      <DependentUpon>WebServicePostSession.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Session\WebServiceUpdateSession.asmx.cs">
+      <DependentUpon>WebServiceUpdateSession.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
