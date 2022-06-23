@@ -1,4 +1,7 @@
 ﻿//using MySql.Data.MySqlClient;
+using StudyDeskV1_WebServices.Communications;
+using StudyDeskV1_WebServices.Helper;
+using StudyDeskV1_WebServices.Resources;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using System.Web.Services.Protocols;
 
 namespace StudyDeskV1_WebServices
 {
@@ -23,6 +27,7 @@ namespace StudyDeskV1_WebServices
      
         string uid, password, server, database;
         private SqlConnection connection;
+        public AuthHeader credentials;
         //readonly DataSet dataTable = new DataSet();
 
         public WebServiceDeleteCategory()
@@ -43,30 +48,48 @@ namespace StudyDeskV1_WebServices
         }
 
         [WebMethod]
-        public string EliminarCategoria(int id)
+        [SoapHeader("credentials")]
+        public WsSecurityResponse EliminarCategoria(int id)
         {
-            connection.Open();
-
-            string result;
-
-
-            SqlCommand cmd =
-                new SqlCommand("DELETE FROM dbo.categories WHERE id=@id", connection);
-            cmd.Parameters.AddWithValue("@id", id);
-
-            try
+            if (credentials != null)
             {
-                cmd.ExecuteNonQuery();
-                result = string.Format("A category with id {0} was deleted without problems", id);
-                connection.Close();
-                return result;
+                if (credentials.IsValid())
+                {
+                    connection.Open();
+
+                    string result;
+
+
+                    SqlCommand cmd =
+                        new SqlCommand("DELETE FROM dbo.categories WHERE id=@id", connection);
+                    cmd.Parameters.AddWithValue("@id", id);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        result = string.Format("A category with id {0} was deleted without problems", id);
+                        connection.Close();
+                        return new WsSecurityResponse(null,result);
+                    }
+                    catch (Exception ex)
+                    {
+                        result = string.Format("An error occurred while a category with id {0} was being deleted: {1}", id, ex.ToString());
+                        connection.Close();
+                        return new WsSecurityResponse(result);
+                    }
+
+                }
+                else
+                    return new WsSecurityResponse("Service failed to authenticate against the provided profile credentials. " +
+                        "Verify that the SOAP request is using the proper credentials.");
             }
-            catch (Exception ex)
+            else
             {
-                result = string.Format("An error occurred while a category with id {0} was being deleted: {1}", id, ex.ToString());
-                connection.Close();
-                return result;
+                return new WsSecurityResponse("The selected Security policy either does not have any " +
+                    "security profiles (X509 or UserNameToken) or the security profiles are " +
+                    "inactive. Verify at least one security profile is active.");
             }
+
         }
     }
 }

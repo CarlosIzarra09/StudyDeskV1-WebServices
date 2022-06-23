@@ -6,6 +6,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using System.Data.SqlClient;
+using StudyDeskV1_WebServices.Helper;
+using System.Web.Services.Protocols;
 
 namespace StudyDeskV1_WebServices
 {
@@ -18,6 +20,7 @@ namespace StudyDeskV1_WebServices
         string consulta, uid, password, server, database;
         private SqlConnection connection;
         readonly DataSet dataTable = new DataSet();
+        public AuthHeader credentials;
         public WebServiceGetStudents()
         {
             Initialize();
@@ -35,17 +38,30 @@ namespace StudyDeskV1_WebServices
             connection = new SqlConnection(connectionString);
         }
         [WebMethod]
+        [SoapHeader("credentials")]
         public DataSet ListaEstudiantes()
         {
-            connection.Open();
+            if (credentials != null)
+            {
+                if (credentials.IsValid())
+                {
+                    connection.Open();
 
-            consulta = "SELECT * FROM dbo.students";
+                    consulta = "SELECT * FROM dbo.students";
 
-            SqlDataAdapter sqlAdapter = new SqlDataAdapter(consulta, connection);
-            sqlAdapter.Fill(dataTable, "DevuelveLista");
-            
-            connection.Close();
-            return dataTable;
+                    SqlDataAdapter sqlAdapter = new SqlDataAdapter(consulta, connection);
+                    sqlAdapter.Fill(dataTable, "Students");
+
+                    connection.Close();
+                    return dataTable;
+                }
+                else
+                    return dataTable;
+            }
+            else
+            {
+                return dataTable;
+            }
         }
     }
 }

@@ -6,6 +6,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Services;
 using System.Data.SqlClient;
+using StudyDeskV1_WebServices.Helper;
+using System.Web.Services.Protocols;
+using StudyDeskV1_WebServices.Communications;
 
 namespace StudyDeskV1_WebServices
 {
@@ -17,6 +20,7 @@ namespace StudyDeskV1_WebServices
         
         string uid, password, server, database;
         private SqlConnection connection;
+        public AuthHeader credentials;
         //readonly DataSet dataTable = new DataSet();
         public WebServiceDeleteStudent()
         {
@@ -35,25 +39,43 @@ namespace StudyDeskV1_WebServices
             connection = new SqlConnection(connectionString);
         }
         [WebMethod]
-        public string EliminarEstudiante(int id)
+        [SoapHeader("credentials")]
+        public WsSecurityResponse EliminarEstudiante(int id)
         {
-            connection.Open();
-            string result;
-            SqlCommand cmd = new SqlCommand("DELETE FROM dbo.students WHERE id=@id ", connection);
-            cmd.Parameters.AddWithValue("@id", id);
+            if (credentials != null)
+            {
+                if (credentials.IsValid())
+                {
+                    connection.Open();
+                    string result;
+                    SqlCommand cmd = new SqlCommand("DELETE FROM dbo.students WHERE id=@id ", connection);
+                    cmd.Parameters.AddWithValue("@id", id);
 
-            try
-            {
-                cmd.ExecuteNonQuery();
-                result = string.Format("An Student with id {0} was deleted without problems", id);
-                connection.Close();
-                return result;
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        result = string.Format("An Student with id {0} was deleted without problems", id);
+                        connection.Close();
+                        return new WsSecurityResponse(null, result);
+                    }
+                    catch (Exception ex)
+                    {
+                        result = string.Format("An error occurred while a Student with id {0} was being deleted: {1}", id, ex.ToString());
+                        connection.Close();
+                        return new WsSecurityResponse(result);
+                    }
+
+
+                }
+                else
+                    return new WsSecurityResponse("Service failed to authenticate against the provided profile credentials. " +
+                        "Verify that the SOAP request is using the proper credentials.");
             }
-            catch (Exception ex)
+            else
             {
-                result = string.Format("An error occurred while a Student with id {0} was being deleted: {1}", id, ex.ToString());
-                connection.Close();
-                return result;
+                return new WsSecurityResponse("The selected Security policy either does not have any " +
+                    "security profiles (X509 or UserNameToken) or the security profiles are " +
+                    "inactive. Verify at least one security profile is active.");
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿//using MySql.Data.MySqlClient;
 using StudyDeskV1_WebServices.Communications;
+using StudyDeskV1_WebServices.Helper;
 using StudyDeskV1_WebServices.Resources;
 using System;
 using System.Collections.Generic;
@@ -8,28 +9,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using System.Web.Services.Protocols;
 
 namespace StudyDeskV1_WebServices
 {
-    public class StudentResponse : BaseResponse<Student>
-    {
-        public StudentResponse()
-        {
-        }
-
-        public StudentResponse(string message) : base(message)
-        {
-        }
-
-        public StudentResponse(Student resource, string message) : base(resource, message)
-        {
-        }
-    }
-
-
-
-
-
+    
     /// <summary>
     /// Descripción breve de GetStudentById
     /// </summary>
@@ -43,6 +27,7 @@ namespace StudyDeskV1_WebServices
         string consulta, uid, password, server, database;
         private SqlConnection connection;
         readonly DataSet dataTable = new DataSet();
+        public AuthHeader credentials;
 
         public WebServiceGetStudentById()
         {
@@ -63,7 +48,28 @@ namespace StudyDeskV1_WebServices
         }
 
         [WebMethod]
-        public StudentResponse RetornarUsuarioEstudiantePorId(int id)
+        [SoapHeader("credentials")]
+        public StudentResponse RetornarUsuarioEstudiantePorId(int id) {
+            if (credentials != null)
+            {
+                if (credentials.IsValid())
+                {
+                    return RetornarEstudiantePorId(id);
+                }
+                else
+                    return new StudentResponse("Service failed to authenticate against the provided profile credentials. " +
+                        "Verify that the SOAP request is using the proper credentials.");
+            }
+            else
+            {
+                return new StudentResponse("The selected Security policy either does not have any " +
+                    "security profiles (X509 or UserNameToken) or the security profiles are " +
+                    "inactive. Verify at least one security profile is active.");
+            }
+        }
+
+
+        public StudentResponse RetornarEstudiantePorId(int id)
         {
             connection.Open();
             Student student = new Student();

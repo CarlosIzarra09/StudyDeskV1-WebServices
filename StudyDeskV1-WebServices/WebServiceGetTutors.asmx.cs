@@ -26,7 +26,7 @@ namespace StudyDeskV1_WebServices
         string consulta, uid, password, server, database;
         private SqlConnection connection;
         readonly DataSet dataTable = new DataSet();
-        public UserDetails user;
+        public AuthHeader credentials;
 
         public WebServiceGetTutors()
         {
@@ -47,19 +47,19 @@ namespace StudyDeskV1_WebServices
 
         
         [WebMethod]
-        [SoapHeader("user")]
+        [SoapHeader("credentials")]
         public DataSet ListaTutores()
         {
             
-            if (user != null)
+            if (credentials != null)
             {
-                if (user.IsValid())
+                if (credentials.IsValid())
                 {
                     connection.Open();
                     consulta = "SELECT * FROM dbo.tutors;";
 
                     SqlDataAdapter sqlAdapter = new SqlDataAdapter(consulta, connection);
-                    sqlAdapter.Fill(dataTable, "DevuelveLista");
+                    sqlAdapter.Fill(dataTable, "Tutors");
 
                     connection.Close();
                     return dataTable;

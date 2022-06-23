@@ -1,10 +1,13 @@
 ﻿//using MySql.Data.MySqlClient;
+using StudyDeskV1_WebServices.Communications;
+using StudyDeskV1_WebServices.Helper;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using System.Web.Services.Protocols;
 
 namespace StudyDeskV1_WebServices
 {
@@ -21,6 +24,7 @@ namespace StudyDeskV1_WebServices
 
         string uid, password, server, database;
         private SqlConnection connection;
+        public AuthHeader credentials;
 
 
         public WebServicePostCourse()
@@ -42,26 +46,44 @@ namespace StudyDeskV1_WebServices
         }
 
         [WebMethod]
-        public string InsertarCurso(string name, int id)
+        [SoapHeader("credentials")]
+        public WsSecurityResponse InsertarCurso(string name, int id)
         {
-            connection.Open();
-            string result;
+            if (credentials != null)
+            {
+                if (credentials.IsValid())
+                {
+                    connection.Open();
+                    string result;
 
-            SqlCommand cmd = new SqlCommand("INSERT INTO dbo.courses(name, career_id) values(@name, @career_id)", connection);
-            cmd.Parameters.AddWithValue("@name", name);
-            cmd.Parameters.AddWithValue("@career_id", id);
-            try
-            {
-                cmd.ExecuteNonQuery();
-                result = "A Course was inserted without problems";
-                connection.Close();
-                return result;
+                    SqlCommand cmd = new SqlCommand("INSERT INTO dbo.courses(name, career_id) values(@name, @career_id)", connection);
+                    cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@career_id", id);
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        result = "A Course was inserted without problems";
+                        connection.Close();
+                        return new WsSecurityResponse(null,result);
+                    }
+                    catch (Exception ex)
+                    {
+                        result = "An error occurred while a Course was being inserted: " + ex.ToString();
+                        connection.Close();
+                        return new WsSecurityResponse(result);
+                    }
+
+
+                }
+                else
+                    return new WsSecurityResponse("Service failed to authenticate against the provided profile credentials. " +
+                        "Verify that the SOAP request is using the proper credentials.");
             }
-            catch (Exception ex)
+            else
             {
-                result = "An error occurred while a Course was being inserted: " + ex.ToString();
-                connection.Close();
-                return result;
+                return new WsSecurityResponse("The selected Security policy either does not have any " +
+                    "security profiles (X509 or UserNameToken) or the security profiles are " +
+                    "inactive. Verify at least one security profile is active.");
             }
         }
     }

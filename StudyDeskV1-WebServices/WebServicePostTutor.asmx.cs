@@ -1,4 +1,6 @@
 ﻿//using MySql.Data.MySqlClient;
+using StudyDeskV1_WebServices.Communications;
+using StudyDeskV1_WebServices.Helper;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using System.Web.Services.Protocols;
 using BCryptNet = BCrypt.Net;
 
 namespace StudyDeskV1_WebServices
@@ -22,7 +25,8 @@ namespace StudyDeskV1_WebServices
     {
         string uid, password, server, database;
         private SqlConnection connection;
-        
+        public AuthHeader credentials;
+
 
         public WebServicePostTutor() {
             Initialize();
@@ -42,38 +46,57 @@ namespace StudyDeskV1_WebServices
         }
 
         [WebMethod]
-        public string InsertarTutor(string name,string lastName, string description,string logo, string email, string password, double priceperhour, int courseId)
+        [SoapHeader("credentials")]
+        public WsSecurityResponse InsertarTutor(string name,string lastName, string description,string logo, string email, string password, double priceperhour, int courseId)
         {
-            connection.Open();
-
-            string result;
-            
-
-            SqlCommand cmd =
-                new SqlCommand("INSERT INTO dbo.tutors(name, last_name, description, logo,email, password,price_per_hour,course_id) values(@name,@lastname,@description,@logo,@email,@password,@priceperhour,@courseid)", connection);
-            //cmd.Parameters.AddWithValue("@id",id);
-            cmd.Parameters.AddWithValue("@name", name);
-            cmd.Parameters.AddWithValue("@lastname", lastName);
-            cmd.Parameters.AddWithValue("@description", description);
-            cmd.Parameters.AddWithValue("@logo", logo);
-            cmd.Parameters.AddWithValue("@email", email);
-            cmd.Parameters.AddWithValue("@password", BCryptNet.BCrypt.HashPassword(password));
-            cmd.Parameters.AddWithValue("@priceperhour", priceperhour);
-            cmd.Parameters.AddWithValue("@courseid", courseId);
-
-            try
+            if (credentials != null)
             {
-                cmd.ExecuteNonQuery();
-                result = "An Tutor was inserted without problems"; 
-                connection.Close();
-                return result;
+                if (credentials.IsValid())
+                {
+                    connection.Open();
+
+                    string result;
+
+
+                    SqlCommand cmd =
+                        new SqlCommand("INSERT INTO dbo.tutors(name, last_name, description, logo,email, password,price_per_hour,course_id) values(@name,@lastname,@description,@logo,@email,@password,@priceperhour,@courseid)", connection);
+                    //cmd.Parameters.AddWithValue("@id",id);
+                    cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@lastname", lastName);
+                    cmd.Parameters.AddWithValue("@description", description);
+                    cmd.Parameters.AddWithValue("@logo", logo);
+                    cmd.Parameters.AddWithValue("@email", email);
+                    cmd.Parameters.AddWithValue("@password", BCryptNet.BCrypt.HashPassword(password));
+                    cmd.Parameters.AddWithValue("@priceperhour", priceperhour);
+                    cmd.Parameters.AddWithValue("@courseid", courseId);
+
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        result = "An Tutor was inserted without problems";
+                        connection.Close();
+                        return new WsSecurityResponse(null,result);
+                    }
+                    catch (Exception ex)
+                    {
+                        result = "An error occurred while a Tutor was being inserted: " + ex.ToString();
+                        connection.Close();
+                        return new WsSecurityResponse(result);
+                    }
+
+
+                }
+                else
+                    return new WsSecurityResponse("Service failed to authenticate against the provided profile credentials. " +
+                        "Verify that the SOAP request is using the proper credentials.");
             }
-            catch (Exception ex) {
-                result = "An error occurred while a Tutor was being inserted: " + ex.ToString();
-                connection.Close();
-                return result;
+            else
+            {
+                return new WsSecurityResponse("The selected Security policy either does not have any " +
+                    "security profiles (X509 or UserNameToken) or the security profiles are " +
+                    "inactive. Verify at least one security profile is active.");
             }
-           
+
         }
     }
 }

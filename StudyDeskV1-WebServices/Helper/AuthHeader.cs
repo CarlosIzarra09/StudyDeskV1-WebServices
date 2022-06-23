@@ -5,7 +5,7 @@ using System.Web;
 
 namespace StudyDeskV1_WebServices.Helper
 {
-    public class UserDetails : System.Web.Services.Protocols.SoapHeader
+    public class AuthHeader : System.Web.Services.Protocols.SoapHeader
     {
         public string Username { get; set; }
         public string Password { get; set; }

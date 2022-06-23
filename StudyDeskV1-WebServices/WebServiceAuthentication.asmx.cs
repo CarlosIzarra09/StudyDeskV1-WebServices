@@ -12,34 +12,7 @@ using BCryptNet = BCrypt.Net;
 
 namespace StudyDeskV1_WebServices
 {
-    /*public class ResponseService
-    {
-        public ResponseService() { }
-        public ResponseService(string message, string status)
-        {
-            this.Status = status;
-            this.Message = message;
-        }
-
-        public string Status { get; set; }
-        public string Message { get; set; }
-    }*/
-
-    public class AuthenticationResponse : BaseResponse<Authentication>
-    {
-        public AuthenticationResponse()
-        {
-        }
-
-        public AuthenticationResponse(string message) : base(message)
-        {
-        }
-
-        public AuthenticationResponse(Authentication resource, string message) : base(resource, message)
-        {
-        }
-    }
-
+    
     /// <summary>
     /// Descripción breve de WebServiceAuthentication
     /// </summary>
@@ -54,6 +27,7 @@ namespace StudyDeskV1_WebServices
         string consulta, uid, password, server, database;
         private SqlConnection connection;
         readonly DataSet dataTable = new DataSet();
+        //public AuthenticationResponse response;
 
         public WebServiceAuthentication()
         {

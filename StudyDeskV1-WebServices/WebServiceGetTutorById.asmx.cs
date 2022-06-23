@@ -1,5 +1,6 @@
 ﻿//using MySql.Data.MySqlClient;
 using StudyDeskV1_WebServices.Communications;
+using StudyDeskV1_WebServices.Helper;
 using StudyDeskV1_WebServices.Resources;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using System.Web.Services.Protocols;
 
 namespace StudyDeskV1_WebServices
 {
@@ -20,20 +22,7 @@ namespace StudyDeskV1_WebServices
     // Para permitir que se llame a este servicio web desde un script, usando ASP.NET AJAX, quite la marca de comentario de la línea siguiente. 
     // [System.Web.Script.Services.ScriptService]
 
-    public class TutorResponse : BaseResponse<Tutor>
-    {
-        public TutorResponse()
-        {
-        }
-
-        public TutorResponse(string message) : base(message)
-        {
-        }
-
-        public TutorResponse(Tutor resource, string message) : base(resource, message)
-        {
-        }
-    }
+    
 
 
 
@@ -42,6 +31,7 @@ namespace StudyDeskV1_WebServices
         string consulta, uid, password, server, database;
         private SqlConnection connection;
         readonly DataSet dataTable = new DataSet();
+        public AuthHeader credentials;
 
         public WebServiceGetTutorById()
         {
@@ -61,8 +51,34 @@ namespace StudyDeskV1_WebServices
             connection = new SqlConnection(connectionString);
         }
 
+
         [WebMethod]
+        [SoapHeader("credentials")]
         public TutorResponse RetornarUsuarioTutorPorId(int id)
+        {
+            if (credentials != null)
+            {
+                if (credentials.IsValid())
+                {
+                    return RetornarTutorPorId(id);
+                }
+                else
+                    return new TutorResponse("Service failed to authenticate against the provided profile credentials. " +
+                        "Verify that the SOAP request is using the proper credentials.");
+            }
+            else
+            {
+                return new TutorResponse("The selected Security policy either does not have any " +
+                    "security profiles (X509 or UserNameToken) or the security profiles are " +
+                    "inactive. Verify at least one security profile is active.");
+            }
+
+        }
+
+
+
+
+        public TutorResponse RetornarTutorPorId(int id)
         {
             connection.Open();
             Tutor tutor = new Tutor();

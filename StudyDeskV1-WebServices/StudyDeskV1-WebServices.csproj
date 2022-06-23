@@ -118,10 +118,16 @@
     <Content Include="WebServiceUpdateUniversity.asmx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Communications\AuthenticationResponse.cs" />
     <Compile Include="Communications\BaseResponse.cs" />
-    <Compile Include="Helper\UserDetails.cs" />
+    <Compile Include="Communications\StudentResponse.cs" />
+    <Compile Include="Communications\TutorResponse.cs" />
+    <Compile Include="Communications\WsSecurityResponse.cs" />
+    <Compile Include="Helper\AuthHeader.cs" />
+    <Compile Include="Resources\WsSecurity.cs" />
     <Compile Include="WebServiceGetStudentById.asmx.cs">
       <DependentUpon>WebServiceGetStudentById.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Resources\Authentication.cs" />
     <Compile Include="Resources\Student.cs" />
@@ -145,6 +151,7 @@
     <Content Include="WebServiceUpdateCourse.asmx" />
     <Compile Include="WebServiceAuthentication.asmx.cs">
       <DependentUpon>WebServiceAuthentication.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServiceGetPlatforms.asmx.cs">
       <DependentUpon>WebServiceGetPlatforms.asmx</DependentUpon>
@@ -156,6 +163,7 @@
     </Compile>
     <Compile Include="WebServiceGetTutorById.asmx.cs">
       <DependentUpon>WebServiceGetTutorById.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServicePostPlatform.asmx.cs">
       <DependentUpon>WebServicePostPlatform.asmx</DependentUpon>
