@@ -142,22 +142,6 @@
     <Compile Include="Resources\Student.cs" />
     <Compile Include="Resources\Tutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WebServices\Session\WebServiceDeleteSession.asmx.cs">
-      <DependentUpon>WebServiceDeleteSession.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WebServices\Session\WebServiceGetSessions.asmx.cs">
-      <DependentUpon>WebServiceGetSessions.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WebServices\Session\WebServicePostSession.asmx.cs">
-      <DependentUpon>WebServicePostSession.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="WebServices\Session\WebServiceUpdateSession.asmx.cs">
-      <DependentUpon>WebServiceUpdateSession.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Content Include="WebServices\Student\WebServiceDeleteStudent.asmx" />
     <Content Include="WebServices\Student\WebServiceGetStudents.asmx" />
     <Content Include="WebServices\Student\WebServicePostStudent.asmx" />
@@ -283,6 +267,22 @@
     </Compile>
     <Compile Include="WebServices\Course\WebServiceUpdateCourse.asmx.cs">
       <DependentUpon>WebServiceUpdateCourse.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Session\WebServiceDeleteSession.asmx.cs">
+      <DependentUpon>WebServiceDeleteSession.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Session\WebServiceGetSessions.asmx.cs">
+      <DependentUpon>WebServiceGetSessions.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Session\WebServicePostSession.asmx.cs">
+      <DependentUpon>WebServicePostSession.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Session\WebServiceUpdateSession.asmx.cs">
+      <DependentUpon>WebServiceUpdateSession.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>

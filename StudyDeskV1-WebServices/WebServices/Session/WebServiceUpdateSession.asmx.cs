@@ -13,7 +13,7 @@ namespace StudyDeskV1_WebServices
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    public class WebServiceUpdatesSession : System.Web.Services.WebService
+    public class WebServiceUpdateSession : System.Web.Services.WebService
     {
         const string quote = "\"";
         string consulta, uid, password, server, database;
@@ -21,7 +21,7 @@ namespace StudyDeskV1_WebServices
         DataSet dataTable = new DataSet();
         public AuthHeader credentials;
 
-        public WebServiceUpdatesSession()
+        public WebServiceUpdateSession()
         {
             Initialize();
         }
