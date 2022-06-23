@@ -1,6 +1,6 @@
-﻿using StudyDeskV1_WebServices.Helper;
+﻿//using MySql.Data.MySqlClient;
+using StudyDeskV1_WebServices.Helper;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -10,24 +10,19 @@ using System.Web.Services.Protocols;
 
 namespace StudyDeskV1_WebServices
 {
-    /// <summary>
-    /// Descripción breve de WebServiceGetTutors
-    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // Para permitir que se llame a este servicio web desde un script, usando ASP.NET AJAX, quite la marca de comentario de la línea siguiente. 
-    // [System.Web.Script.Services.ScriptService]
-    public class WebServiceGetTutors : System.Web.Services.WebService
+    public class WebServiceGetCareers : System.Web.Services.WebService
     {
 
-
+        
         string consulta, uid, password, server, database;
         private SqlConnection connection;
         readonly DataSet dataTable = new DataSet();
         public AuthHeader credentials;
 
-        public WebServiceGetTutors()
+        public WebServiceGetCareers()
         {
             Initialize();
         }
@@ -44,33 +39,23 @@ namespace StudyDeskV1_WebServices
             connection = new SqlConnection(connectionString);
         }
 
-
+        
         [WebMethod]
-        [SoapHeader("credentials")]
-        public DataSet ListaTutores()
+        public DataSet ListaCarreras()
         {
-
-            if (credentials != null)
-            {
-                if (credentials.IsValid())
-                {
+            
+            
                     connection.Open();
-                    consulta = "SELECT * FROM dbo.tutors;";
+
+
+                    consulta = "SELECT * FROM dbo.careers;";
 
                     SqlDataAdapter sqlAdapter = new SqlDataAdapter(consulta, connection);
-                    sqlAdapter.Fill(dataTable, "Tutors");
+                    sqlAdapter.Fill(dataTable, "Careers");
 
                     connection.Close();
                     return dataTable;
-                }
-                else
-                    return dataTable;
-            }
-            else
-            {
-                return dataTable;
-            }
-
+              
         }
     }
 }

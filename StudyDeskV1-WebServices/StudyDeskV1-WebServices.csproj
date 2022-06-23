@@ -112,10 +112,15 @@
     <Content Include="WebServiceDeleteUniversity.asmx" />
     <Content Include="WebServiceGetPlatforms.asmx" />
     <Content Include="WebServiceGetTutorById.asmx" />
+    <Content Include="WebServiceGetTutors.asmx" />
     <Content Include="WebServiceGetUniversities.asmx" />
     <Content Include="WebServicePostPlatform.asmx" />
     <Content Include="WebServicePostUniversity.asmx" />
     <Content Include="WebServiceUpdateUniversity.asmx" />
+    <Content Include="WebServiceDeleteCareer.asmx" />
+    <Content Include="WebServiceGetCareers.asmx" />
+    <Content Include="WebServicePostCareer.asmx" />
+    <Content Include="WebServiceUpdateCareer.asmx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Communications\AuthenticationResponse.cs" />
@@ -142,7 +147,6 @@
     <Content Include="WebServicePostCategory.asmx" />
     <Content Include="WebServiceUpdateCategory.asmx" />
     <Content Include="WebServiceDeleteTutor.asmx" />
-    <Content Include="WebServiceGetTutors.asmx" />
     <Content Include="WebServicePostTutor.asmx" />
     <Content Include="WebServiceUpdateTutor.asmx" />
     <Content Include="WebServiceDeleteCourses.asmx" />
@@ -163,6 +167,10 @@
     </Compile>
     <Compile Include="WebServiceGetTutorById.asmx.cs">
       <DependentUpon>WebServiceGetTutorById.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServiceGetTutors.asmx.cs">
+      <DependentUpon>WebServiceGetTutors.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServicePostPlatform.asmx.cs">
@@ -205,8 +213,20 @@
       <DependentUpon>WebServiceGetCourses.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="WebServiceGetTutors.asmx.cs">
-      <DependentUpon>WebServiceGetTutors.asmx</DependentUpon>
+    <Compile Include="WebServiceDeleteCareer.asmx.cs">
+      <DependentUpon>WebServiceDeleteCareer.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServiceGetCareers.asmx.cs">
+      <DependentUpon>WebServiceGetCareers.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServicePostCareer.asmx.cs">
+      <DependentUpon>WebServicePostCareer.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServiceUpdateCareer.asmx.cs">
+      <DependentUpon>WebServiceUpdateCareer.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServicePostTutor.asmx.cs">
