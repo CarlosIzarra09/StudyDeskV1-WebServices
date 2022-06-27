@@ -109,6 +109,10 @@
     <Content Include="WebServices\Student\WebServiceGetStudentById.asmx" />
     <Content Include="Web.config" />
     <Content Include="WebServiceAuthentication.asmx" />
+    <Content Include="WebServices\Topic\WebServiceDeleteTopic.asmx" />
+    <Content Include="WebServices\Topic\WebServiceGetTopics.asmx" />
+    <Content Include="WebServices\Topic\WebServicePostTopic.asmx" />
+    <Content Include="WebServices\Topic\WebServiceUpdateTopic.asmx" />
     <Content Include="WebServices\University\WebServiceDeleteUniversity.asmx" />
     <Content Include="WebServices\Platform\WebServiceGetPlatforms.asmx" />
     <Content Include="WebServices\Tutor\WebServiceGetTutorById.asmx" />
@@ -163,6 +167,22 @@
     </Compile>
     <Compile Include="WebServices\Student\WebServiceGetStudents.asmx.cs">
       <DependentUpon>WebServiceGetStudents.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Topic\WebServiceDeleteTopic.asmx.cs">
+      <DependentUpon>WebServiceDeleteTopic.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Topic\WebServiceGetTopics.asmx.cs">
+      <DependentUpon>WebServiceGetTopics.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Topic\WebServicePostTopic.asmx.cs">
+      <DependentUpon>WebServicePostTopic.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Topic\WebServiceUpdateTopic.asmx.cs">
+      <DependentUpon>WebServiceUpdateTopic.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServices\Tutor\WebServiceGetTutorById.asmx.cs">
