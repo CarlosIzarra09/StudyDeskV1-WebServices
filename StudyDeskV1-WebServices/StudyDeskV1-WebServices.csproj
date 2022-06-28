@@ -108,6 +108,10 @@
   <ItemGroup>
     <Content Include="WebServices\Platform\WebServiceDeletePlatform.asmx" />
     <Content Include="WebServices\Platform\WebServiceUpdatePlatform.asmx" />
+    <Content Include="WebServices\SessionReservation\WebServiceDeleteSessionRsv.asmx" />
+    <Content Include="WebServices\SessionReservation\WebServiceGetSessionsRsv.asmx" />
+    <Content Include="WebServices\SessionReservation\WebServicePostSessionRsv.asmx" />
+    <Content Include="WebServices\SessionReservation\WebServiceUpdateSessionRsv.asmx" />
     <Content Include="WebServices\Student\WebServiceGetStudentById.asmx" />
     <Content Include="Web.config" />
     <Content Include="WebServices\Session\WebServiceDeleteSession.asmx" />
@@ -146,6 +150,22 @@
     </Compile>
     <Compile Include="WebServices\Platform\WebServiceUpdatePlatform.asmx.cs">
       <DependentUpon>WebServiceUpdatePlatform.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\SessionReservation\WebServiceDeleteSessionRsv.asmx.cs">
+      <DependentUpon>WebServiceDeleteSessionRsv.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\SessionReservation\WebServiceGetSessionsRsv.asmx.cs">
+      <DependentUpon>WebServiceGetSessionsRsv.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\SessionReservation\WebServicePostSessionRsv.asmx.cs">
+      <DependentUpon>WebServicePostSessionRsv.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\SessionReservation\WebServiceUpdateSessionRsv.asmx.cs">
+      <DependentUpon>WebServiceUpdateSessionRsv.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServices\Student\WebServiceGetStudentById.asmx.cs">
