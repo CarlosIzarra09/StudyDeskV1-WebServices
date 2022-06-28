@@ -1,31 +1,36 @@
-﻿//using MySql.Data.MySqlClient;
+﻿using StudyDeskV1_WebServices.Communications;
+using StudyDeskV1_WebServices.Helper;
 using System;
-using System.Data;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using System.Web.Services.Protocols;
 using BCryptNet = BCrypt.Net;
-using System.Data.SqlClient;
-using StudyDeskV1_WebServices.Communications;
-using StudyDeskV1_WebServices.Helper;
 
-namespace StudyDeskV1_WebServices
+namespace StudyDeskV1_WebServices.WebServices.Tutor
 {
+    /// <summary>
+    /// Descripción breve de WebServiceUpdatePasswordAndEmailOfTutor
+    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    public class WebServiceUpdateStudent : System.Web.Services.WebService
+    // Para permitir que se llame a este servicio web desde un script, usando ASP.NET AJAX, quite la marca de comentario de la línea siguiente. 
+    // [System.Web.Script.Services.ScriptService]
+    public class WebServiceUpdatePasswordAndEmailOfTutor : System.Web.Services.WebService
     {
-        
+
         string uid, password, server, database;
         private SqlConnection connection;
         public AuthHeader credentials;
-        //DataSet dataTable = new DataSet();
-        public WebServiceUpdateStudent()
+
+        public WebServiceUpdatePasswordAndEmailOfTutor()
         {
             Initialize();
         }
+
         private void Initialize()
         {
             server = "sql202201.database.windows.net";
@@ -38,8 +43,10 @@ namespace StudyDeskV1_WebServices
 
             connection = new SqlConnection(connectionString);
         }
+
         [WebMethod]
-        public WsSecurityResponse ActualizarEstudiante(int id, string name, string lastName, string logo, string email, string password, int tutorId, int careerId)
+        [SoapHeader("credentials")]
+        public WsSecurityResponse ActualizarTutor(int id, string password, string mail)
         {
             if (credentials != null)
             {
@@ -49,26 +56,24 @@ namespace StudyDeskV1_WebServices
 
                     string result;
 
+
                     SqlCommand cmd =
-                        new SqlCommand("UPDATE dbo.students SET name=@name, last_name=@lastname, logo=@logo, is_tutor=@tutorId, career_id=@careerId " +
+                        new SqlCommand("UPDATE dbo.tutors SET email=@email, password=@password " +
                         "WHERE id=@id", connection);
                     cmd.Parameters.AddWithValue("@id", id);
-                    cmd.Parameters.AddWithValue("@name", name);
-                    cmd.Parameters.AddWithValue("@lastname", lastName);
-                    cmd.Parameters.AddWithValue("@logo", logo);
-                    cmd.Parameters.AddWithValue("@tutorId", tutorId);
-                    cmd.Parameters.AddWithValue("@careerId", careerId);
+                    cmd.Parameters.AddWithValue("@email", mail);
+                    cmd.Parameters.AddWithValue("@password", BCryptNet.BCrypt.HashPassword(password));
 
                     try
                     {
                         cmd.ExecuteNonQuery();
-                        result = string.Format("An Student with id {0} was updated without problems", id);
+                        result = string.Format("An Tutor with id {0} was updated without problems", id);
                         connection.Close();
                         return new WsSecurityResponse(null, result);
                     }
                     catch (Exception ex)
                     {
-                        result = string.Format("An error occurred while a Student with id {0} was being inserted: {1}", id, ex.ToString());
+                        result = string.Format("An error occurred while a Tutor with id {0} was being inserted: {1}", id, ex.ToString());
                         connection.Close();
                         return new WsSecurityResponse(result);
                     }
@@ -83,6 +88,7 @@ namespace StudyDeskV1_WebServices
                     "security profiles (X509 or UserNameToken) or the security profiles are " +
                     "inactive. Verify at least one security profile is active.");
             }
+
 
         }
     }
