@@ -1,36 +1,31 @@
 ﻿//using MySql.Data.MySqlClient;
-using StudyDeskV1_WebServices.Communications;
-using StudyDeskV1_WebServices.Helper;
 using System;
+using System.Data;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using BCryptNet = BCrypt.Net;
+using System.Data.SqlClient;
+using StudyDeskV1_WebServices.Helper;
 using System.Web.Services.Protocols;
+using StudyDeskV1_WebServices.Communications;
 
-namespace StudyDeskV1_WebServices
+namespace StudyDeskV1_WebServices.WebServices.Topic
 {
-    /// <summary>
-    /// Descripción breve de WebServiceDeleteTutor
-    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // Para permitir que se llame a este servicio web desde un script, usando ASP.NET AJAX, quite la marca de comentario de la línea siguiente. 
-    // [System.Web.Script.Services.ScriptService]
-    public class WebServiceDeleteTutor : System.Web.Services.WebService
-    { 
+    public class WebServiceUpdateTopic : System.Web.Services.WebService
+    {
         string uid, password, server, database;
         private SqlConnection connection;
         public AuthHeader credentials;
-
-
-        public WebServiceDeleteTutor()
+        //DataSet dataTable = new DataSet();
+        public WebServiceUpdateTopic()
         {
             Initialize();
         }
-
         private void Initialize()
         {
             server = "sql202201.database.windows.net";
@@ -43,43 +38,38 @@ namespace StudyDeskV1_WebServices
 
             connection = new SqlConnection(connectionString);
         }
-
         [WebMethod]
         [SoapHeader("credentials")]
-        public WsSecurityResponse EliminarTutor(int id) {
-
+        public WsSecurityResponse ActualizarTopico(int id, string name, int courseId)
+        {
             if (credentials != null)
             {
                 if (credentials.IsValid())
                 {
                     connection.Open();
+
                     string result;
-                    SqlCommand cmd = new SqlCommand("DELETE FROM dbo.tutors WHERE id=@id ", connection);
+
+                    SqlCommand cmd =
+                        new SqlCommand("UPDATE dbo.topics SET name=@name, course_id=@courseId " +
+                        "WHERE id=@id", connection);
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@course_id", courseId);
 
                     try
                     {
-                        int i = cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                        result = string.Format("An Topic with id {0} was updated without problems", id);
                         connection.Close();
-                        if (i != 0)
-                        {
-                            result = string.Format("A Tutor with id {0} was deleted without problems", id);
-                            return new WsSecurityResponse(null, result);
-                        }
-                        else
-                        {
-                            result = string.Format("A Tutor with id {0} was not found", id);
-                            return new WsSecurityResponse(result);
-                        }
+                        return new WsSecurityResponse(null, result);
                     }
                     catch (Exception ex)
                     {
-                        result = string.Format("An error occurred while a Tutor with id {0} was being deleted: {1}", id, ex.ToString());
+                        result = string.Format("An error occurred while a Topic with id {0} was being updated: {1}", id, ex.ToString());
                         connection.Close();
                         return new WsSecurityResponse(result);
                     }
-
-
                 }
                 else
                     return new WsSecurityResponse("Service failed to authenticate against the provided profile credentials. " +
@@ -91,6 +81,7 @@ namespace StudyDeskV1_WebServices
                     "security profiles (X509 or UserNameToken) or the security profiles are " +
                     "inactive. Verify at least one security profile is active.");
             }
+
         }
     }
 }

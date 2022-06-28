@@ -1,36 +1,31 @@
 ﻿//using MySql.Data.MySqlClient;
-using StudyDeskV1_WebServices.Communications;
-using StudyDeskV1_WebServices.Helper;
 using System;
+using System.Data;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
+using BCryptNet = BCrypt.Net;
+using System.Data.SqlClient;
+using StudyDeskV1_WebServices.Helper;
 using System.Web.Services.Protocols;
+using StudyDeskV1_WebServices.Communications;
 
-namespace StudyDeskV1_WebServices
+namespace StudyDeskV1_WebServices.WebServices.Topic
 {
-    /// <summary>
-    /// Descripción breve de WebServiceDeleteTutor
-    /// </summary>
     [WebService(Namespace = "http://tempuri.org/")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
     [System.ComponentModel.ToolboxItem(false)]
-    // Para permitir que se llame a este servicio web desde un script, usando ASP.NET AJAX, quite la marca de comentario de la línea siguiente. 
-    // [System.Web.Script.Services.ScriptService]
-    public class WebServiceDeleteTutor : System.Web.Services.WebService
-    { 
+    public class WebServicePostTopic : System.Web.Services.WebService
+    {
         string uid, password, server, database;
         private SqlConnection connection;
         public AuthHeader credentials;
-
-
-        public WebServiceDeleteTutor()
+        //DataSet dataTable = new DataSet();
+        public WebServicePostTopic()
         {
             Initialize();
         }
-
         private void Initialize()
         {
             server = "sql202201.database.windows.net";
@@ -43,42 +38,37 @@ namespace StudyDeskV1_WebServices
 
             connection = new SqlConnection(connectionString);
         }
-
         [WebMethod]
         [SoapHeader("credentials")]
-        public WsSecurityResponse EliminarTutor(int id) {
-
+        public WsSecurityResponse InsertarTopico(string name, int courseId)
+        {
             if (credentials != null)
             {
                 if (credentials.IsValid())
                 {
                     connection.Open();
+
                     string result;
-                    SqlCommand cmd = new SqlCommand("DELETE FROM dbo.tutors WHERE id=@id ", connection);
-                    cmd.Parameters.AddWithValue("@id", id);
+
+                    SqlCommand cmd =
+                        new SqlCommand("INSERT INTO dbo.topics(name, course_id) values(@name,@courseId)", connection);
+                    //cmd.Parameters.AddWithValue("@id",id);
+                    cmd.Parameters.AddWithValue("@name", name);
+                    cmd.Parameters.AddWithValue("@courseId", courseId);
 
                     try
                     {
-                        int i = cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                        result = "A Topic was inserted without problems";
                         connection.Close();
-                        if (i != 0)
-                        {
-                            result = string.Format("A Tutor with id {0} was deleted without problems", id);
-                            return new WsSecurityResponse(null, result);
-                        }
-                        else
-                        {
-                            result = string.Format("A Tutor with id {0} was not found", id);
-                            return new WsSecurityResponse(result);
-                        }
+                        return new WsSecurityResponse(null, result);
                     }
                     catch (Exception ex)
                     {
-                        result = string.Format("An error occurred while a Tutor with id {0} was being deleted: {1}", id, ex.ToString());
+                        result = "An error occurred while a Topic was being inserted: " + ex.ToString();
                         connection.Close();
                         return new WsSecurityResponse(result);
                     }
-
 
                 }
                 else
