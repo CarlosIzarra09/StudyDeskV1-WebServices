@@ -56,7 +56,7 @@ namespace StudyDeskV1_WebServices
                     connection.Open();
 
 
-                    consulta = "SELECT * FROM dbo.platforms;";
+                    consulta = "SELECT * FROM dbo.platforms";
 
                     SqlDataAdapter sqlAdapter = new SqlDataAdapter(consulta, connection);
                     sqlAdapter.Fill(dataTable, "Platforms");

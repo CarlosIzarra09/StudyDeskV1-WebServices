@@ -106,6 +106,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="WebServices\Platform\WebServiceDeletePlatform.asmx" />
+    <Content Include="WebServices\Platform\WebServiceUpdatePlatform.asmx" />
     <Content Include="WebServices\Student\WebServiceGetStudentById.asmx" />
     <Content Include="Web.config" />
     <Content Include="WebServiceAuthentication.asmx" />
@@ -130,6 +132,14 @@
     <Compile Include="Communications\WsSecurityResponse.cs" />
     <Compile Include="Helper\AuthHeader.cs" />
     <Compile Include="Resources\WsSecurity.cs" />
+    <Compile Include="WebServices\Platform\WebServiceDeletePlatform.asmx.cs">
+      <DependentUpon>WebServiceDeletePlatform.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Platform\WebServiceUpdatePlatform.asmx.cs">
+      <DependentUpon>WebServiceUpdatePlatform.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebServices\Student\WebServiceGetStudentById.asmx.cs">
       <DependentUpon>WebServiceGetStudentById.asmx</DependentUpon>
       <SubType>Component</SubType>
