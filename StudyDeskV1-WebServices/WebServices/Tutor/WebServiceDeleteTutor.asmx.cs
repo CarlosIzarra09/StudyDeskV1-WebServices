@@ -59,10 +59,18 @@ namespace StudyDeskV1_WebServices
 
                     try
                     {
-                        cmd.ExecuteNonQuery();
-                        result = string.Format("An Tutor with id {0} was deleted without problems", id);
+                        int i = cmd.ExecuteNonQuery();
                         connection.Close();
-                        return new WsSecurityResponse(null,result);
+                        if (i != 0)
+                        {
+                            result = string.Format("A Tutor with id {0} was deleted without problems", id);
+                            return new WsSecurityResponse(null, result);
+                        }
+                        else
+                        {
+                            result = string.Format("A Tutor with id {0} was not found", id);
+                            return new WsSecurityResponse(result);
+                        }
                     }
                     catch (Exception ex)
                     {

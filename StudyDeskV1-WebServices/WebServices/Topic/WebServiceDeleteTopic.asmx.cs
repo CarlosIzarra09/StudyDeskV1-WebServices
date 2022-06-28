@@ -54,7 +54,7 @@ namespace StudyDeskV1_WebServices.WebServices.Topic
                     try
                     {
                         cmd.ExecuteNonQuery();
-                        result = string.Format("An Topic with id {0} was deleted without problems", id);
+                        result = string.Format("A Topic with id {0} was deleted without problems", id);
                         connection.Close();
                         return new WsSecurityResponse(null, result);
                     }

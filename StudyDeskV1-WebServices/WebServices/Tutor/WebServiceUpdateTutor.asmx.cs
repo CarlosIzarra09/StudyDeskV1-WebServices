@@ -71,19 +71,29 @@ namespace StudyDeskV1_WebServices
                     cmd.Parameters.AddWithValue("@priceperhour", priceperhour);
                     cmd.Parameters.AddWithValue("@courseid", courseId);
 
+                   
                     try
                     {
-                        cmd.ExecuteNonQuery();
-                        result = string.Format("An Tutor with id {0} was updated without problems", id);
+                        int i = cmd.ExecuteNonQuery();
                         connection.Close();
-                        return new WsSecurityResponse(null,result);
+                        if (i != 0)
+                        {
+                            result = string.Format("A Tutor with id {0} was updated without problems", id);
+                            return new WsSecurityResponse(null, result);
+                        }
+                        else
+                        {
+                            result = string.Format("A Tutor with id {0} was not found", id);
+                            return new WsSecurityResponse(result);
+                        }
                     }
                     catch (Exception ex)
                     {
-                        result = string.Format("An error occurred while a Tutor with id {0} was being inserted: {1}", id, ex.ToString());
+                        result = string.Format("An error occurred while a Tutor with id {0} was being deleted: {1}", id, ex.ToString());
                         connection.Close();
                         return new WsSecurityResponse(result);
                     }
+
                 }
                 else
                     return new WsSecurityResponse("Service failed to authenticate against the provided profile credentials. " +

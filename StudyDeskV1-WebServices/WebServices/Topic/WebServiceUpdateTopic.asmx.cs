@@ -39,6 +39,7 @@ namespace StudyDeskV1_WebServices.WebServices.Topic
             connection = new SqlConnection(connectionString);
         }
         [WebMethod]
+        [SoapHeader("credentials")]
         public WsSecurityResponse ActualizarTopico(int id, string name, int courseId)
         {
             if (credentials != null)
@@ -50,7 +51,7 @@ namespace StudyDeskV1_WebServices.WebServices.Topic
                     string result;
 
                     SqlCommand cmd =
-                        new SqlCommand("UPDATE dbo.students SET name=@name, course_id=@courseId " +
+                        new SqlCommand("UPDATE dbo.topics SET name=@name, course_id=@courseId " +
                         "WHERE id=@id", connection);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@name", name);
@@ -65,7 +66,7 @@ namespace StudyDeskV1_WebServices.WebServices.Topic
                     }
                     catch (Exception ex)
                     {
-                        result = string.Format("An error occurred while a Topic with id {0} was being inserted: {1}", id, ex.ToString());
+                        result = string.Format("An error occurred while a Topic with id {0} was being updated: {1}", id, ex.ToString());
                         connection.Close();
                         return new WsSecurityResponse(result);
                     }
