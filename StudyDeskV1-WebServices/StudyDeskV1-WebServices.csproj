@@ -123,6 +123,8 @@
     <Content Include="WebServices\Topic\WebServiceGetTopics.asmx" />
     <Content Include="WebServices\Topic\WebServicePostTopic.asmx" />
     <Content Include="WebServices\Topic\WebServiceUpdateTopic.asmx" />
+    <Content Include="WebServices\Student\WebServiceUpdatePasswordAndEmailOfStudent.asmx" />
+    <Content Include="WebServices\Tutor\WebServiceUpdatePasswordAndEmailOfTutor.asmx" />
     <Content Include="WebServices\University\WebServiceDeleteUniversity.asmx" />
     <Content Include="WebServices\Platform\WebServiceGetPlatforms.asmx" />
     <Content Include="WebServices\Tutor\WebServiceGetTutorById.asmx" />
@@ -219,6 +221,10 @@
       <DependentUpon>WebServiceUpdateTopic.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="WebServices\Student\WebServiceUpdatePasswordAndEmailOfStudent.asmx.cs">
+      <DependentUpon>WebServiceUpdatePasswordAndEmailOfStudent.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="WebServices\Tutor\WebServiceGetTutorById.asmx.cs">
       <DependentUpon>WebServiceGetTutorById.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -241,6 +247,10 @@
     </Compile>
     <Compile Include="WebServices\Student\WebServiceDeleteStudent.asmx.cs">
       <DependentUpon>WebServiceDeleteStudent.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="WebServices\Tutor\WebServiceUpdatePasswordAndEmailOfTutor.asmx.cs">
+      <DependentUpon>WebServiceUpdatePasswordAndEmailOfTutor.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="WebServices\University\WebServiceGetUniversities.asmx.cs">

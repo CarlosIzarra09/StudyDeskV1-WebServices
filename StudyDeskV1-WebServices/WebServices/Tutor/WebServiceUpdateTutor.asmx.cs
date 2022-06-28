@@ -47,7 +47,7 @@ namespace StudyDeskV1_WebServices
 
         [WebMethod]
         [SoapHeader("credentials")]
-        public WsSecurityResponse ActualizarTutor(int id, string name, string lastName, string description, string logo, string email, string password, double priceperhour, int courseId)
+        public WsSecurityResponse ActualizarTutor(int id, string name, string lastName, string description, string logo, double priceperhour, int courseId)
         {
             if (credentials != null)
             {
@@ -59,15 +59,13 @@ namespace StudyDeskV1_WebServices
 
 
                     SqlCommand cmd =
-                        new SqlCommand("UPDATE dbo.tutors SET name=@name, last_name=@lastname, description=@description,logo=@logo,email=@email,password=@password,price_per_hour=@priceperhour,course_id=@courseid " +
+                        new SqlCommand("UPDATE dbo.tutors SET name=@name, last_name=@lastname, description=@description,logo=@logo,price_per_hour=@priceperhour,course_id=@courseid " +
                         "WHERE id=@id", connection);
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@name", name);
                     cmd.Parameters.AddWithValue("@lastname", lastName);
                     cmd.Parameters.AddWithValue("@description", description);
                     cmd.Parameters.AddWithValue("@logo", logo);
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.Parameters.AddWithValue("@password", BCryptNet.BCrypt.HashPassword(password));
                     cmd.Parameters.AddWithValue("@priceperhour", priceperhour);
                     cmd.Parameters.AddWithValue("@courseid", courseId);
 
